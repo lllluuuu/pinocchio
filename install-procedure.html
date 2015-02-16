@@ -1,0 +1,116 @@
+   <!DOCTYPE html>
+   <html>
+
+   <head>
+      <meta charset='utf-8'>
+      <meta http-equiv="X-UA-Compatible" content="chrome=1">
+      <meta name="description" content="Pino-hub : Portal for stack-of-tasks / Pinocchio : pre-alpha version">
+
+      <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+      <title>Pino-hub</title>
+   </head>
+
+   <body>
+
+      <!-- HEADER -->
+      <div id="header_wrap" class="outer">
+         <header class="inner">
+            <a id="forkme_banner" href="https://github.com/fvalenza/pino-hub">View on GitHub</a>
+
+            <h1 id="project_title">Pino-hub</h1>
+            <h2 id="project_tagline">Portal for stack-of-tasks / Pinocchio : pre-alpha version</h2>
+
+            <section id="downloads">
+               <a class="buttons github" href="index.html" >Homepage</a>
+               <a class="buttons github" href="install-procedure.html" >How To Install</a>
+               <a class="buttons github" href="getting-started.html" >Getting Started</a>
+            </section>
+         </header>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div id="main_content_wrap" class="outer">
+         <section id="main_content" class="inner">
+            <h1>
+               <a id="install-procedure-page" class="anchor" href="#install-procedure-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install procedure
+            </h1>
+            <p> In the following page, we summrize the procedure to have a functional installation of <a id="pinocchio-github" href="https://github.com/stack-of-tasks/pinocchio">Pinocchio</a> and <a id="gviewer-github" href="https://github.com/humanoid-path-planner/gepetto-viewer">Gepetto-viewer</a></p>
+            <h2 id="Prerequisites"> Prerequisites</h2>
+               <h3 id="apt-dependencies"> Necessary dependencies</h3>
+                  <p> A bunch of packages must be installed first before we can install Pinocchio. To make things easier, here is a non-exhaustive list of dependencies you can get from apt: </p>
+                  <pre><code>sudo apt-get install libboost-dev libboost-doc libboost-thread-dev libboost-system-dev libboost-test-dev libboost-filesystem-dev libboost-python-dev libboost-program-options-dev libtinyxml-dev libopenthreads14 libeigen3-dev libeigen3-doc libomniorb4-dev omniorb-nameserver omniidl omniidl-python pkg-config</code></pre>
+               <h3 id="Git-install-package">
+                  How to install from a git repository
+               </h3>
+                  <p> In the next steps, we are going to install many packages downloaded from github so ensure to have git installed (from apt). In the github page of each package you will find the installation steps. The packages from humanoid-path-planner or stack-of-tasks repositories are provided with a cmake submodule. We strongly recommend that you clone them with a --recursive option. In case you don't, you may have problems finding boost/cmake or others during the generation of your makefile. In case that happens, just go to the root of your git module and type:</p>
+                  <pre><code>git submodule init
+   git submodule update</code></pre>
+
+                  <h2>
+                     <a id="user-content-install-standalone-urdfdom" class="anchor" href="#install-standalone-urdfdom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install standalone urdfdom</h3>
+                     <p>In order to read urdf files (see <a href="http://wiki.ros.org/urdf">http://wiki.ros.org/urdf</a> for the description), we have to install the urdfdom package which can come either along ROS library or be installed as a standalone library. Next section describes the second procedure.</p>
+
+                     <p>urdfdom depends on both console_bridge and urdfdom_headers. The installation of both dependencies can be done with the following command lines in a terminal :</p>
+
+                     <pre><code>git clone git://github.com/ros/console_bridge.git &amp;&amp; cd console_bridge &amp;&amp; mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make &amp;&amp; sudo make install</code></pre>
+                     <pre><code>git clone git://github.com/ros/urdfdom_headers &amp;&amp; cd urdfdom_headers &amp;&amp; mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make &amp;&amp; sudo make install</code></pre>
+
+
+                     <p>Finally, you just need to apply the following command line to install urdfdom library :</p>
+
+                        <pre><code>git clone git://github.com/ros/urdfdom &amp;&amp; cd urdfdom &amp;&amp; mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make &amp;&amp; sudo make install</code></pre>
+                  <h2> <a id="user-content-install-eigenpy" class="anchor" href="#install-osg" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install EigenPy</h3>
+                  <p>Get the released version v1.2.0 of <a href="https://github.com/stack-of-tasks/eigenpy"> EigenPy</a></p> </br>
+                  <pre><code>git clone --branch v1.2.0 git@github.com:stack-of-tasks/eigenpy.git</code></pre>
+   <p>Depending on your version of NumPy, you may have errors at compilation of eigenpy. If so, you can modify directly /usr/include/python2.7/numpy/ndarraytypes.h and remove the trailing comma at lines 159 and 211 to have:</p>
+   <pre> typedef enum {
+      NPY_INTROSELECT=0
+   } NPY_SELECTKIND;</pre> and <pre> NPY_INTERNAL_UNSAFE_CASTING_BUT_WARN_UNLESS_SAME_KIND = 100
+   } NPY_CASTING;</pre>
+
+                  <h3> <a id="user-content-install-pinocchio" class="anchor" href="#install-pinocchio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Pinocchio</h3>
+                  <p>Get the pre-release version of <!-- <a href="https://github.com/stack-of-tasks/pinocchio"> --> Pinocchio</a>
+                  (* Temporary repository <a href="https://github.com/fvalenza/pinocchio"> here</a>) and install it</p> </br>
+                  <pre><code>git clone --branch beta https://github.com/fvalenza/pinocchio.git</code></pre>
+                  <h3> <a id="user-content-install-collada" class="anchor" href="#install-collada" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install collada-dom</h3>
+                  <p> Clone the repository from <a href = "https://github.com/humanoid-path-planner/collada-dom"> github</a></p>
+                  <pre><code>cd collada-dom
+   mkdir -p build
+   cd build/
+   cmake [OPTIONS] ..
+   make install
+   </code></pre>
+
+                  <h3> <a id="user-content-install-osg" class="anchor" href="#install-osg" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install OpenSceneGraph</h3>
+                     <ol>
+                        <li> Install the dependencies required for OSG </br> <pre><code> sudo apt-get build-dep openscenegraph </code></pre>
+                        <li> Get the source files </br> <pre><code>wget http://www.openscenegraph.org/downloads/developer_releases/OpenSceneGraph-3.2.1.zip </code></pre>
+                        <li> Unzip
+                        <li> In a terminal, go to the unzipped directory and type : </br> <pre><code> ./configure </br> make </br> make install</code></pre>
+                     </ol>
+
+
+   <h3> <a id="user-content-install-gepetto-viewer" class="anchor" href="#install-gepetto-viewer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Gepetto-viewer</h3>
+   <p> Clone the repository from <a href = "https://github.com/humanoid-path-planner/gepetto-viewer.git"> github</p>
+
+      <h3> <a id="user-content-install-gepetto-viewer-corba" class="anchor" href="#install-gepetto-viewer-corba" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Gepetto-viewer-corba</h3>
+      <p> Clone the repository from <a href = "https://github.com/humanoid-path-planner/gepetto-viewer-corba.git"> github</p>
+
+
+      <h3> <a id="note-install" class="anchor" href="#notes-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notes</h3>
+   <p> Following this procedure, you may have problems finding the libraries when compiling. If so, we advice you to check the paths where to search for theses libraries/packages. Three environement variables are to be checked : <code>PYTHONPATH</code>,<code>PKG_CONFIG_PATH</code>and <code>LD_LIBRARY_PATH</code></p>
+   </section>
+   </div>
+      <!-- FOOTER  -->
+      <div id="footer_wrap" class="outer">
+         <footer class="inner">
+            <p class="copyright">Pino-hub maintained by <a href="https://github.com/fvalenza">fvalenza</a></p>
+            <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+         </footer>
+      </div>
+
+
+
+   </body>
+   </html>
